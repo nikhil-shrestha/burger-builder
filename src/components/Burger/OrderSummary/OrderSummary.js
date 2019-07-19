@@ -1,7 +1,12 @@
 import React from 'react';
 import Button from '../../UI/Button/Button';
 
-function orderSummary({ ingredients, purchaseCancelled, purchaseContinued }) {
+function orderSummary({
+  ingredients,
+  purchaseCancelled,
+  purchaseContinued,
+  price
+}) {
   const ingredientSummary = Object.keys(ingredients).map(igKey => {
     return (
       <li key={igKey}>
@@ -15,6 +20,7 @@ function orderSummary({ ingredients, purchaseCancelled, purchaseContinued }) {
       <h3>Your Order</h3>
       <p>A delicious burger with the following ingredients:</p>
       <ul>{ingredientSummary}</ul>
+      <strong>Total Price: {price.toFixed(2)}</strong>
       <p>Continue to Checkou?</p>
       <Button btnType="Danger" clicked={purchaseCancelled}>
         CANCEL
