@@ -14,6 +14,9 @@ function orderSummary({ ingredients }) {
       <h3>Your Order</h3>
       <p>A delicious burger with the following ingredients:</p>
       <ul>{ingredientSummary}</ul>
+      <p>Continue to Checkou?</p>
+      <button>CANCEL</button>
+      <button>CONTINUE</button>
     </React.Fragment>
   );
 }
