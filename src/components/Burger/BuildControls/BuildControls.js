@@ -11,7 +11,7 @@ const controls = [
   { label: 'Meat', type: 'meat' }
 ];
 
-const buildControls = ({ ingredientAdded }) => {
+const buildControls = ({ ingredientAdded, ingredientRemoved, disabled }) => {
   return (
     <div className="BuildControls">
       {controls.map(ctrl => (
@@ -19,7 +19,9 @@ const buildControls = ({ ingredientAdded }) => {
           key={ctrl.label}
           label={ctrl.label}
           type={ctrl.type}
+          disabled={disabled[ctrl.type]}
           added={() => ingredientAdded(ctrl.type)}
+          removed={() => ingredientRemoved(ctrl.type)}
         />
       ))}
     </div>
