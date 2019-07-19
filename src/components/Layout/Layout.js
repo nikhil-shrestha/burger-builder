@@ -6,15 +6,20 @@ import './Layout.css';
 
 class Layout extends Component {
   state = {
-    showSideDrawer: true
+    showSideDrawer: false
   };
+
+  sideDrawerToggleHandler = () =>
+    this.setState(prevState => {
+      return { showSideDrawer: !prevState.showSideDrawer };
+    });
 
   sideDrawerCloseHandler = () => this.setState({ showSideDrawer: false });
 
   render() {
     return (
       <React.Fragment>
-        <Toolbar />
+        <Toolbar drawerToggleClicked={this.sideDrawerToggleHandler} />
         <SideDrawer
           open={this.state.showSideDrawer}
           closed={this.sideDrawerCloseHandler}
