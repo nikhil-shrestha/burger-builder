@@ -7,7 +7,7 @@ import './Toolbar.css';
 const toolbar = () => (
   <header className="Toolbar">
     <div>Menu</div>
-    <Logo />
+    <Logo height="80%" />
     <nav>
       <NavigationItems />
     </nav>
