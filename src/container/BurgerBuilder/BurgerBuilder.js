@@ -50,7 +50,7 @@ class BurgerBuilder extends Component {
   };
 
   render() {
-    const { ingredients } = this.state;
+    const { ingredients, totalPrice } = this.state;
     const disabledInfo = {
       ...ingredients
     };
@@ -63,6 +63,7 @@ class BurgerBuilder extends Component {
       <React.Fragment>
         <Burger ingredients={ingredients} />
         <BuildControls
+          price={totalPrice}
           ingredientAdded={this.addIngredientHandler}
           ingredientRemoved={this.removeIngredientHandler}
           disabled={disabledInfo}
