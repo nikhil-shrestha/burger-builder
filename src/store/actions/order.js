@@ -1,6 +1,10 @@
 import axios from '../../axios-orders';
 
-import { PURCHASE_BURGER_SUCCESS, PURCHASE_BURGER_FAIL } from './type';
+import {
+  PURCHASE_BURGER_SUCCESS,
+  PURCHASE_BURGER_FAIL,
+  PURCHASE_BURGER_START
+} from './type';
 
 export function purchaseBurgerSuccess(id, orderData) {
   return {
@@ -19,8 +23,15 @@ export function purchaseBurgerFail(error) {
   };
 }
 
-export function purchaseBurgerStart(orderData) {
+export function purchaseBurgerStart() {
+  return {
+    type: PURCHASE_BURGER_START
+  };
+}
+
+export function purchaseBurger(orderData) {
   return dispatch => {
+    dispatch(purchaseBurgerStart());
     axios
       .post('/orders.json', orderData)
       .then(res => dispatch(purchaseBurgerSuccess(res.data)))
