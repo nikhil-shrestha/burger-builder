@@ -12,16 +12,8 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import { ADD_INGREDIENT, REMOVE_INGREDIENT } from '../../store/actions';
 
-const INGREDIENT_PRICES = {
-  salad: 0.5,
-  cheese: 0.4,
-  meat: 1.3,
-  bacon: 0.7
-};
-
 class BurgerBuilder extends Component {
   state = {
-    totalPrice: 4,
     purchaseable: false,
     purchasing: false,
     loading: false,
@@ -46,37 +38,6 @@ class BurgerBuilder extends Component {
 
     this.setState({ purchaseable: sum > 0 });
   }
-
-  addIngredientHandler = type => {
-    const oldCount = this.props.ings[type];
-    const updatedCount = oldCount + 1;
-    const updatedIngredients = {
-      ...this.state.ingredients
-    };
-    updatedIngredients[type] = updatedCount;
-    const priceAddition = INGREDIENT_PRICES[type];
-    const oldPrice = this.state.totalPrice;
-    const newPrice = oldPrice + priceAddition;
-    this.setState({ totalPrice: newPrice, ingredients: updatedIngredients });
-    this.updatePurchaseState(updatedIngredients);
-  };
-
-  removeIngredientHandler = type => {
-    const oldCount = this.state.ingredients[type];
-    if (oldCount <= 0) {
-      return;
-    }
-    const updatedCount = oldCount - 1;
-    const updatedIngredients = {
-      ...this.state.ingredients
-    };
-    updatedIngredients[type] = updatedCount;
-    const priceDeduction = INGREDIENT_PRICES[type];
-    const oldPrice = this.state.totalPrice;
-    const newPrice = oldPrice - priceDeduction;
-    this.setState({ totalPrice: newPrice, ingredients: updatedIngredients });
-    this.updatePurchaseState(updatedIngredients);
-  };
 
   purchaseHandler = () => this.setState({ purchasing: true });
 
@@ -103,8 +64,8 @@ class BurgerBuilder extends Component {
   };
 
   render() {
-    const { ings } = this.props;
-    const { totalPrice, purchaseable, purchasing, error } = this.state;
+    const { ings, price } = this.props;
+    const { purchaseable, purchasing, error } = this.state;
     const disabledInfo = {
       ...ings
     };
@@ -120,7 +81,7 @@ class BurgerBuilder extends Component {
         <React.Fragment>
           <Burger ingredients={ings} />
           <BuildControls
-            price={totalPrice}
+            price={price}
             ingredientAdded={this.props.onIngredientAdded}
             ingredientRemoved={this.props.onIngredientRemoved}
             disabled={disabledInfo}
@@ -135,7 +96,7 @@ class BurgerBuilder extends Component {
           ingredients={ings}
           purchaseCancelled={this.purchaseCancelHandler}
           purchaseContinued={this.purchaseContinueHandler}
-          price={totalPrice}
+          price={price}
         />
       );
     }
@@ -157,7 +118,8 @@ class BurgerBuilder extends Component {
 
 const mapStateToProps = state => {
   return {
-    ings: state.ingredients
+    ings: state.ingredients,
+    price: state.totalPrice
   };
 };
 
