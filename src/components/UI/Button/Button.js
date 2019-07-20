@@ -3,8 +3,12 @@ import classnames from 'classnames';
 
 import './Button.css';
 
-const button = ({ children, clicked, btnType }) => (
-  <button className={classnames('Button', btnType)} onClick={clicked}>
+const button = ({ children, clicked, btnType, disabled }) => (
+  <button
+    disabled={disabled}
+    className={classnames('Button', btnType)}
+    onClick={clicked}
+  >
     {children}
   </button>
 );
