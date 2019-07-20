@@ -14,7 +14,6 @@ import { ADD_INGREDIENT, REMOVE_INGREDIENT } from '../../store/actions';
 
 class BurgerBuilder extends Component {
   state = {
-    purchaseable: false,
     purchasing: false,
     loading: false,
     error: false
@@ -36,7 +35,7 @@ class BurgerBuilder extends Component {
         return sum + el;
       }, 0);
 
-    this.setState({ purchaseable: sum > 0 });
+    return sum > 0;
   }
 
   purchaseHandler = () => this.setState({ purchasing: true });
@@ -65,7 +64,7 @@ class BurgerBuilder extends Component {
 
   render() {
     const { ings, price } = this.props;
-    const { purchaseable, purchasing, error } = this.state;
+    const { purchasing, error } = this.state;
     const disabledInfo = {
       ...ings
     };
@@ -85,7 +84,7 @@ class BurgerBuilder extends Component {
             ingredientAdded={this.props.onIngredientAdded}
             ingredientRemoved={this.props.onIngredientRemoved}
             disabled={disabledInfo}
-            purchaseable={purchaseable}
+            purchaseable={this.updatePurchaseState(ings)}
             ordered={this.purchaseHandler}
           />
         </React.Fragment>
