@@ -2,22 +2,28 @@ import React from 'react';
 
 import './Input.css';
 
-const input = props => {
+const input = ({ elementType, elementConfig, value, name, label }) => {
   let inputElement = null;
-  switch (props.inputtype) {
+  switch (elementType) {
     case 'input':
-      inputElement = <input className="InputElement" {...props} />;
+      inputElement = (
+        <input className="InputElement" {...elementConfig} value={value} />
+      );
       break;
     case 'textarea':
-      inputElement = <textarea className="InputElement" {...props} />;
+      inputElement = (
+        <textarea className="InputElement" {...elementConfig} value={value} />
+      );
       break;
     default:
-      inputElement = <input className="InputElement" {...props} />;
+      inputElement = (
+        <input className="InputElement" {...elementConfig} value={value} />
+      );
   }
   return (
     <div className="Input">
-      <label htmlFor={props.name} className="Label">
-        {props.label}
+      <label htmlFor={name} className="Label">
+        {label}
       </label>
       {inputElement}
     </div>

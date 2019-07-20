@@ -9,18 +9,58 @@ import './ContactData.css';
 
 class ContactData extends Component {
   state = {
-    ingredients: null,
-    price: null,
-    customer: {
-      name: '',
-      address: {
-        street: '',
-        zipcode: '',
-        country: ''
+    orderForm: {
+      name: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Name'
+        },
+        value: ''
       },
-      email: ''
+      street: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Street'
+        },
+        value: ''
+      },
+      zipcode: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Zip Code'
+        },
+        value: ''
+      },
+      country: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Country'
+        },
+        value: ''
+      },
+      email: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'email',
+          placeholder: 'Your Email'
+        },
+        value: ''
+      },
+      deliveryMethod: {
+        elementType: 'select',
+        elementConfig: {
+          options: [
+            { value: 'fastest', displayValue: 'Fastest' },
+            { value: 'cheapest', displayValue: 'Cheapest' }
+          ]
+        },
+        value: ''
+      }
     },
-    deliveryMethod: 'fastest',
     loading: false
   };
 
@@ -30,17 +70,7 @@ class ContactData extends Component {
     this.setState({ loading: true });
     const order = {
       ingredients: this.props.ingredients,
-      price: this.props.price,
-      customer: {
-        name: 'Nikhil Shrestha',
-        address: {
-          street: 'test street 1',
-          zipcode: '4321',
-          country: 'Nepal'
-        },
-        email: 'nikhil@gmail.com'
-      },
-      deliveryMethod: 'fastest'
+      price: this.props.price
     };
     axios
       .post('/orders.json', order)
@@ -58,7 +88,7 @@ class ContactData extends Component {
   render() {
     let form = (
       <form>
-        <Input type="text" name="name" placeholder="Your name" />
+        <Input elementType="..." elementConfig="..." value="..." />
         <Input type="email" name="email" placeholder="Your Email" />
         <Input type="text" name="street" placeholder="Street" />
         <Input type="text" name="postal" placeholder="Postal Code" />
