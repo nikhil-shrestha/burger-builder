@@ -10,20 +10,19 @@ import Modal from '../../components/UI/Modal/Modal';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
-import { addIngredient, removeIngredient } from '../../store/actions/';
+import {
+  addIngredient,
+  removeIngredient,
+  initIngridients
+} from '../../store/actions/';
 
 class BurgerBuilder extends Component {
   state = {
-    purchasing: false,
-    loading: false,
-    error: false
+    purchasing: false
   };
 
   componentDidMount() {
-    // axios
-    //   .get('/ingredients.json')
-    //   .then(res => this.setState({ ingredients: res.data }))
-    //   .catch(err => this.setState({ error: true }));
+    this.props.onInitIngridient();
   }
 
   updatePurchaseState(ingredients) {
@@ -45,8 +44,8 @@ class BurgerBuilder extends Component {
   purchaseContinueHandler = () => this.props.history.push('/checkout');
 
   render() {
-    const { ings, price } = this.props;
-    const { purchasing, error } = this.state;
+    const { ings, price, error } = this.props;
+    const { purchasing } = this.state;
     const disabledInfo = {
       ...ings
     };
@@ -82,10 +81,6 @@ class BurgerBuilder extends Component {
       );
     }
 
-    if (this.state.loading) {
-      orderSummary = <Spinner />;
-    }
-
     return (
       <React.Fragment>
         <Modal show={purchasing} modalClosed={this.purchaseCancelHandler}>
@@ -100,7 +95,8 @@ class BurgerBuilder extends Component {
 const mapStateToProps = state => {
   return {
     ings: state.ingredients,
-    price: state.totalPrice
+    price: state.totalPrice,
+    error: state.error
   };
 };
 
@@ -109,7 +105,8 @@ const mapDispatchToProps = dispatch => {
     onIngredientAdded: ingName =>
       dispatch(addIngredient({ ingredientName: ingName })),
     onIngredientRemoved: ingName =>
-      dispatch(removeIngredient({ ingredientName: ingName }))
+      dispatch(removeIngredient({ ingredientName: ingName })),
+    onInitIngridient: () => dispatch(initIngridients())
   };
 };
 
