@@ -8,14 +8,15 @@ import Backdrop from '../../UI/Backdrop/Backdrop';
 import './SideDrawer.css';
 
 const sideDrawer = ({ open, closed }) => {
-  let attachedClasses = classnames('SideDrawer', 'Close');
-  if (open) {
-    attachedClasses = classnames('SideDrawer', 'Open');
-  }
   return (
     <React.Fragment>
       <Backdrop show={open} clicked={closed} />
-      <div className={attachedClasses}>
+      <div
+        className={classnames('SideDrawer', {
+          Open: open,
+          Close: !open
+        })}
+      >
         <Logo height="11%" />
         <nav>
           <NavigationItems />
