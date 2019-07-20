@@ -58,7 +58,7 @@ class ContactData extends Component {
             { value: 'cheapest', displayValue: 'Cheapest' }
           ]
         },
-        value: ''
+        value: 'fastest'
       }
     },
     loading: false
@@ -86,12 +86,26 @@ class ContactData extends Component {
   };
 
   render() {
+    const formElementsArray = [];
+    for (let key in this.state.orderForm) {
+      formElementsArray.push({
+        id: key,
+        config: this.state.orderForm[key]
+      });
+    }
     let form = (
       <form>
-        <Input elementType="..." elementConfig="..." value="..." />
-        <Input type="email" name="email" placeholder="Your Email" />
-        <Input type="text" name="street" placeholder="Street" />
-        <Input type="text" name="postal" placeholder="Postal Code" />
+        {formElementsArray.map(formEle => (
+          <Input
+            key={formEle.id}
+            elementType={formEle.config.elementType}
+            elementConfig={formEle.config.elementConfig}
+            value={formEle.config.value}
+            name={formEle.id}
+            label={formEle.id}
+          />
+        ))}
+
         <Button btnType="Success" clicked={this.orderHandler}>
           ORDER
         </Button>
