@@ -16,7 +16,11 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'Your Name'
         },
-        value: ''
+        value: '',
+        validation: {
+          required: true
+        },
+        valid: false
       },
       street: {
         elementType: 'input',
@@ -24,7 +28,11 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'Street'
         },
-        value: ''
+        value: '',
+        validation: {
+          required: true
+        },
+        valid: false
       },
       zipcode: {
         elementType: 'input',
@@ -32,7 +40,13 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'Zip Code'
         },
-        value: ''
+        value: '',
+        validation: {
+          required: true,
+          minLength: 5,
+          maxLength: 5
+        },
+        valid: false
       },
       country: {
         elementType: 'input',
@@ -40,7 +54,11 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'Country'
         },
-        value: ''
+        value: '',
+        validation: {
+          required: true
+        },
+        valid: false
       },
       email: {
         elementType: 'input',
@@ -48,7 +66,11 @@ class ContactData extends Component {
           type: 'email',
           placeholder: 'Your Email'
         },
-        value: ''
+        value: '',
+        validation: {
+          required: true
+        },
+        valid: false
       },
       deliveryMethod: {
         elementType: 'select',
@@ -83,22 +105,41 @@ class ContactData extends Component {
     };
     axios
       .post('/orders.json', order)
-      .then(response => {
+      .then(res => {
         this.setState({ loading: false });
         this.props.history.push('/');
       })
-      .catch(error => {
+      .catch(err => {
         this.setState({ loading: false });
       });
   };
 
-  inputChangedHandler = (e, inputIdentifier) => {
-    console.log();
+  checkValidity(value, rules) {
+    let isValid = false;
 
+    if (rules.required) {
+      isValid = value.trim() !== '';
+    }
+
+    if (rules.minLength) {
+      isValid = value.length >= rules.minLength;
+    }
+
+    if (rules.maxLength) {
+      isValid = value.length <= rules.maxLength;
+    }
+    return isValid;
+  }
+
+  inputChangedHandler = (e, inputIdentifier) => {
     const updatedOrderForm = { ...this.state.orderForm };
     const updatedFormEle = { ...updatedOrderForm[inputIdentifier] };
 
     updatedFormEle.value = e.target.value;
+    updatedFormEle.valid = this.checkValidity(
+      updatedFormEle.value,
+      updatedFormEle.validation
+    );
 
     updatedOrderForm[inputIdentifier] = updatedFormEle;
 
