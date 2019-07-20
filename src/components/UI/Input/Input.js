@@ -10,12 +10,13 @@ const input = ({
   name,
   changed,
   invalid,
-  shouldValidate
+  shouldValidate,
+  touched
 }) => {
   let inputElement = null;
 
   const inputClasses = classnames('InputElement', {
-    Invalid: invalid && shouldValidate
+    Invalid: invalid && shouldValidate && touched
   });
 
   switch (elementType) {
