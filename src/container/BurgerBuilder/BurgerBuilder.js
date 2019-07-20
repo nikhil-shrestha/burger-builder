@@ -13,7 +13,8 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import {
   addIngredient,
   removeIngredient,
-  initIngridients
+  initIngridients,
+  purchaseInit
 } from '../../store/actions/';
 
 class BurgerBuilder extends Component {
@@ -41,7 +42,10 @@ class BurgerBuilder extends Component {
 
   purchaseCancelHandler = () => this.setState({ purchasing: false });
 
-  purchaseContinueHandler = () => this.props.history.push('/checkout');
+  purchaseContinueHandler = () => {
+    this.props.onPurchaseInit();
+    this.props.history.push('/checkout');
+  };
 
   render() {
     const { ings, price, error } = this.props;
@@ -106,7 +110,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(addIngredient({ ingredientName: ingName })),
     onIngredientRemoved: ingName =>
       dispatch(removeIngredient({ ingredientName: ingName })),
-    onInitIngridient: () => dispatch(initIngridients())
+    onInitIngridient: () => dispatch(initIngridients()),
+    onPurchaseInit: () => dispatch(purchaseInit())
   };
 };
 

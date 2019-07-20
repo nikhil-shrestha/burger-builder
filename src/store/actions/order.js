@@ -3,7 +3,8 @@ import axios from '../../axios-orders';
 import {
   PURCHASE_BURGER_SUCCESS,
   PURCHASE_BURGER_FAIL,
-  PURCHASE_BURGER_START
+  PURCHASE_BURGER_START,
+  PURCHASE_INIT
 } from './type';
 
 export function purchaseBurgerSuccess(id, orderData) {
@@ -36,5 +37,11 @@ export function purchaseBurger(orderData) {
       .post('/orders.json', orderData)
       .then(res => dispatch(purchaseBurgerSuccess(res.data.name, orderData)))
       .catch(err => dispatch(purchaseBurgerFail(err)));
+  };
+}
+
+export function purchaseInit(orderData) {
+  return {
+    type: PURCHASE_INIT
   };
 }
