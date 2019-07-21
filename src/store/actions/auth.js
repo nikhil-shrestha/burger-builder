@@ -88,14 +88,14 @@ export function authCheckState() {
       dispatch(logout());
     } else {
       const expire = new Date(localStorage.getItem('expireDate'));
-      if (expire > new Date()) {
+      if (expire <= new Date()) {
+        dispatch(logout());
+      } else {
         const userId = localStorage.getItem('userId');
         dispatch(authSuccess(token, userId));
         dispatch(
-          checkAuthTimeout(expire.getSeconds() - new Date().getSeconds())
+          checkAuthTimeout((expire.getTime() - new Date().getTime()) / 1000)
         );
-      } else {
-        dispatch(logout());
       }
     }
   };
