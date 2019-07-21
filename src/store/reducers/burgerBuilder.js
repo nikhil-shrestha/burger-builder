@@ -3,7 +3,7 @@ import {
   REMOVE_INGREDIENT,
   SET_INGREDIENTS,
   FETCH_INGREDIENTS_FAILED
-} from '../actions/type';
+} from '../actions/types';
 import { updateObject } from '../utility';
 
 const initialState = {

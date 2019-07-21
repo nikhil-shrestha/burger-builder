@@ -5,7 +5,7 @@ import {
   REMOVE_INGREDIENT,
   SET_INGREDIENTS,
   FETCH_INGREDIENTS_FAILED
-} from './type';
+} from './types';
 
 export function addIngredient(payload) {
   return {

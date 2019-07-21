@@ -8,7 +8,7 @@ import {
   FETCH_ORDER_SUCCESS,
   FETCH_ORDER_FAIL,
   FETCH_ORDER_START
-} from './type';
+} from './types';
 
 export function purchaseBurgerSuccess(id, orderData) {
   return {
