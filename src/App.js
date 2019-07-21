@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Layout from './hoc/Layout/Layout';
 import BurgerBuilder from './container/BurgerBuilder/BurgerBuilder';
@@ -8,7 +9,12 @@ import Orders from './container/Orders/Orders';
 import Auth from './container/Auth/Auth';
 import Logout from './container/Auth/Logout/Logout';
 
+import { authCheckState } from './store/actions';
+
 class App extends Component {
+  componentDidMount() {
+    this.props.onAuthCheckState();
+  }
   render() {
     return (
       <div>
@@ -26,4 +32,13 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapDispatchToProps = dispatch => {
+  return {
+    onAuthCheckState: () => dispatch(authCheckState())
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(App);
