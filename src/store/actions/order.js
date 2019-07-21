@@ -13,10 +13,8 @@ import {
 export function purchaseBurgerSuccess(id, orderData) {
   return {
     type: PURCHASE_BURGER_SUCCESS,
-    payload: {
-      id,
-      orderData
-    }
+    orderId: id,
+    orderData
   };
 }
 
