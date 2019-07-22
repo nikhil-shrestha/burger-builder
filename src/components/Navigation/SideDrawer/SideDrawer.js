@@ -7,7 +7,7 @@ import Backdrop from '../../UI/Backdrop/Backdrop';
 
 import './SideDrawer.css';
 
-const sideDrawer = ({ open, closed }) => {
+const sideDrawer = ({ open, closed, isAuth }) => {
   return (
     <React.Fragment>
       <Backdrop show={open} clicked={closed} />
@@ -16,10 +16,11 @@ const sideDrawer = ({ open, closed }) => {
           Open: open,
           Close: !open
         })}
+        onClick={closed}
       >
         <Logo height="11%" />
         <nav>
-          <NavigationItems />
+          <NavigationItems isAuthenticated={isAuth} />
         </nav>
       </div>
     </React.Fragment>
