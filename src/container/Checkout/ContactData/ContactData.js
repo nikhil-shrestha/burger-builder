@@ -8,6 +8,7 @@ import Button from '../../../components/UI/Button/Button';
 import Input from '../../../components/UI/Input/Input';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 import { purchaseBurger } from '../../../store/actions/';
+import { updateObject, checkValidity } from '../../../shared/utility';
 
 import './ContactData.css';
 
@@ -76,7 +77,8 @@ class ContactData extends Component {
         },
         value: '',
         validation: {
-          required: true
+          required: true,
+          isEmail: true
         },
         valid: false,
         touched: false
@@ -120,47 +122,19 @@ class ContactData extends Component {
     this.props.onOrderBurger(order, token);
   };
 
-  checkValidity(value, rules) {
-    let isValid = true;
-    if (!rules) {
-      return;
-    }
-
-    if (rules.required) {
-      isValid = value.trim() !== '' && isValid;
-    }
-
-    if (rules.minLength) {
-      isValid = value.length >= rules.minLength && isValid;
-    }
-
-    if (rules.maxLength) {
-      isValid = value.length <= rules.maxLength && isValid;
-    }
-
-    if (rules.isEmail) {
-      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-      isValid = pattern.test(value) && isValid;
-    }
-
-    if (rules.isNumeric) {
-      const pattern = /^\d+$/;
-      isValid = pattern.test(value) && isValid;
-    }
-    return isValid;
-  }
-
   inputChangedHandler = (e, inputIdentifier) => {
-    const updatedOrderForm = { ...this.state.orderForm };
-    const updatedFormEle = { ...updatedOrderForm[inputIdentifier] };
+    const { orderForm } = this.state;
 
-    updatedFormEle.value = e.target.value;
-    updatedFormEle.valid = this.checkValidity(
-      updatedFormEle.value,
-      updatedFormEle.validation
-    );
-    updatedFormEle.touched = true;
-    updatedOrderForm[inputIdentifier] = updatedFormEle;
+    const updatedOrderForm = updateObject(orderForm, {
+      [inputIdentifier]: updateObject(orderForm[inputIdentifier], {
+        value: e.target.value,
+        valid: checkValidity(
+          e.target.value,
+          orderForm[inputIdentifier].validation
+        ),
+        touched: true
+      })
+    });
 
     let formIsValid = true;
     for (let inputIdentifier in updatedOrderForm) {
