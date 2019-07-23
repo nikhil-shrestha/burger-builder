@@ -24,11 +24,11 @@ export function authFail(error) {
 }
 
 export function logout() {
-  localStorage.removeItem('token');
-  localStorage.removeItem('expireDate');
-  localStorage.removeItem('userId');
+  // localStorage.removeItem('token');
+  // localStorage.removeItem('expireDate');
+  // localStorage.removeItem('userId');
   return {
-    type: actions.AUTH_LOGOUT
+    type: actions.AUTH_INITIATE_LOGOUT
   };
 }
 
