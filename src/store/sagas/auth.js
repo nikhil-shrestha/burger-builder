@@ -1,12 +1,12 @@
-import { put } from 'redux-saga';
+import { put } from 'redux-saga/effects';
 
 import * as actions from '../actions/types';
 
-function* logout(action) {
+export function* logoutSaga(action) {
   yield localStorage.removeItem('token');
   yield localStorage.removeItem('expireDate');
   yield localStorage.removeItem('userId');
-  put({
+  yield put({
     type: actions.AUTH_LOGOUT
   });
 }
