@@ -1,44 +1,34 @@
-import axios from '../../axios-orders';
-
-import {
-  ADD_INGREDIENT,
-  REMOVE_INGREDIENT,
-  SET_INGREDIENTS,
-  FETCH_INGREDIENTS_FAILED
-} from './types';
+import * as types from './types';
 
 export function addIngredient(payload) {
   return {
-    type: ADD_INGREDIENT,
+    type: types.ADD_INGREDIENT,
     payload
   };
 }
 
 export function removeIngredient(payload) {
   return {
-    type: REMOVE_INGREDIENT,
+    type: types.REMOVE_INGREDIENT,
     payload
   };
 }
 
 export function setIngridient(payload) {
   return {
-    type: SET_INGREDIENTS,
+    type: types.SET_INGREDIENTS,
     payload
   };
 }
 
 export function fetchIngridientsFailed() {
   return {
-    type: FETCH_INGREDIENTS_FAILED
+    type: types.FETCH_INGREDIENTS_FAILED
   };
 }
 
 export function initIngridients() {
-  return dispatch => {
-    axios
-      .get('/ingredients.json')
-      .then(res => dispatch(setIngridient(res.data)))
-      .catch(err => dispatch(fetchIngridientsFailed()));
+  return {
+    type: types.INIT_INGREDIENTS
   };
 }
