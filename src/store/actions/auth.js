@@ -1,16 +1,16 @@
 import axios from 'axios';
 
-import * as actions from './types';
+import * as types from './types';
 
 export function authStart() {
   return {
-    type: actions.AUTH_START
+    type: types.AUTH_START
   };
 }
 
 export function authSuccess(idToken, userId) {
   return {
-    type: actions.AUTH_SUCCESS,
+    type: types.AUTH_SUCCESS,
     idToken,
     userId
   };
@@ -18,7 +18,7 @@ export function authSuccess(idToken, userId) {
 
 export function authFail(error) {
   return {
-    type: actions.AUTH_FAIL,
+    type: types.AUTH_FAIL,
     error
   };
 }
@@ -28,15 +28,26 @@ export function logout() {
   // localStorage.removeItem('expireDate');
   // localStorage.removeItem('userId');
   return {
-    type: actions.AUTH_INITIATE_LOGOUT
+    type: types.AUTH_INITIATE_LOGOUT
+  };
+}
+
+export function logoutSucceed() {
+  return {
+    type: types.AUTH_LOGOUT
   };
 }
 
 export function checkAuthTimeout(expirationTime) {
-  return dispatch => {
-    setTimeout(() => {
-      dispatch(logout());
-    }, expirationTime * 1000);
+  // return dispatch => {
+  //   setTimeout(() => {
+  //     dispatch(logout());
+  //   }, expirationTime * 1000);
+  // };
+
+  return {
+    type: types.AUTH_CHECK_TIMEOUT,
+    expirationTime: expirationTime
   };
 }
 
@@ -74,7 +85,7 @@ export function auth(email, password, isSignUp) {
 
 export function setAuthRedirectPath(path) {
   return {
-    type: actions.SET_AUTH_REDIRECT_PATH,
+    type: types.SET_AUTH_REDIRECT_PATH,
     path
   };
 }
